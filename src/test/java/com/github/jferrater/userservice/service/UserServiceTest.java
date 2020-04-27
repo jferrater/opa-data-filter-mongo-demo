@@ -1,6 +1,5 @@
 package com.github.jferrater.userservice.service;
 
-import com.github.jferrater.userservice.exceptions.UserNotFoundException;
 import com.github.jferrater.userservice.repository.UserRepository;
 import com.github.jferrater.userservice.repository.document.User;
 import com.github.jferrater.userservice.repository.document.UserType;
@@ -9,11 +8,9 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
@@ -87,9 +84,10 @@ class UserServiceTest {
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane Update", "San Francisco City", "1234567", new Date(), new Date());
 
-        when(userRepository.findByOrganizationAndUsername("SOMA-Clinic", "alice")).thenReturn(Optional.of(updated));
+        when(userRepository.findByOrganizationAndUsername("SOMA-Clinic", "alice")).thenReturn(List.of(updated));
 
-        User result = target.findUserByOrganizationAndUsername("SOMA-Clinic", "alice");
+        List<User> results = target.findUserByOrganizationAndUsername("SOMA-Clinic", "alice");
+        User result = results.get(0);
 
         assertThat(result, is(notNullValue()));
         assertThat(result.getOrganization(), is("SOMA-Clinic"));
@@ -103,13 +101,6 @@ class UserServiceTest {
         assertThat(result.getContactNumber(), is("1234567"));
         assertThat(result.getCreated(), is(notNullValue()));
         assertThat(result.getUpdated(), is(notNullValue()));
-    }
-
-    @Test
-    void shouldThrowUserNotFoundException() {
-        when(userRepository.findByOrganizationAndUsername("SOMA-Clinic", "alice")).thenThrow(new UserNotFoundException("Not found!"));
-
-        assertThrows(UserNotFoundException.class, () -> target.findUserByOrganizationAndUsername("some org", "dodong"));
     }
 
     @Test

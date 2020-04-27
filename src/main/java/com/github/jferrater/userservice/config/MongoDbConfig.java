@@ -1,5 +1,6 @@
 package com.github.jferrater.userservice.config;
 
+import com.github.jferrater.opadatafiltermongospringbootstarter.repository.OpaMongoRepositoryFactoryBean;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +13,10 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
  * @author joffryferrater
  */
 @Configuration
-@EnableMongoRepositories(basePackages = "com.github.jferrater.userservice.repository")
+@EnableMongoRepositories(
+        basePackages = "com.github.jferrater.userservice.repository"
+        , repositoryFactoryBeanClass = OpaMongoRepositoryFactoryBean.class
+)
 public class MongoDbConfig {
 
     @Value("${spring.data.mongodb.uri}")

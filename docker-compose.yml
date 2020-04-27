@@ -7,11 +7,22 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - mongo-database
+      - opa-server
     environment:
+      OPA_AUTHORIZATION_URL: http://opa-server:8181/v1/compile
       SPRING_DATA_MONGODB_URI: "mongodb://mongo:mongo@mongo-database:27017/user_service"
       SPRING_DATA_MONGODB_DATABASE: user_service
     ports:
       - "8082:8082"
+
+  opa-server:
+    build:
+      context: ./
+      dockerfile: Dockerfile_OPA
+    depends_on:
+      - mongo-database
+    ports:
+      - "8181:8181"
 
   mongo-database:
     image: mongo:4.2.5-bionic

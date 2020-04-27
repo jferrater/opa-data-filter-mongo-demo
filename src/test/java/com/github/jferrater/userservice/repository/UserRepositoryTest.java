@@ -60,7 +60,7 @@ class UserRepositoryTest {
 
     @Test
     void shouldGetUserByOrganizationAndUsername() {
-        User result = target.findByOrganizationAndUsername(null, "dodong").orElse(null);
+        User result = target.findByOrganizationAndUsername(null, "dodong").get(0);
 
         assertThat(result, is(notNullValue()));
         assertThat(result.getOrganization(), is(nullValue()));

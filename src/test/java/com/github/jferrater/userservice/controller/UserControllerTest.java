@@ -141,22 +141,22 @@ class UserControllerTest {
         User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), new Date());
-        when(userRepository.findByOrganizationAndUsername(anyString(), anyString())).thenReturn(Optional.of(alice));
+        when(userRepository.findByOrganizationAndUsername(anyString(), anyString())).thenReturn(List.of(alice));
 
         mockMvc.perform(get("/users?organization=SOMA-Clinic&username=alice")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(USER_ID_LIST.get(0))))
-                .andExpect(jsonPath("$.organization", is("SOMA-Clinic")))
-                .andExpect(jsonPath("$.username", is("alice")))
-                .andExpect(jsonPath("$.password", is("password")))
-                .andExpect(jsonPath("$.userType", is("VETERINARIAN")))
-                .andExpect(jsonPath("$.roles[0]", is("vet")))
-                .andExpect(jsonPath("$.permissions[0]", is("POST:petprofiles")))
-                .andExpect(jsonPath("$.fullName", is("Alice Bane")))
-                .andExpect(jsonPath("$.address", is("New York City")))
-                .andExpect(jsonPath("$.created", is(notNullValue())))
-                .andExpect(jsonPath("$.updated", is(notNullValue())));
+                .andExpect(jsonPath("$[0].id", is(USER_ID_LIST.get(0))))
+                .andExpect(jsonPath("$[0].organization", is("SOMA-Clinic")))
+                .andExpect(jsonPath("$[0].username", is("alice")))
+                .andExpect(jsonPath("$[0].password", is("password")))
+                .andExpect(jsonPath("$[0].userType", is("VETERINARIAN")))
+                .andExpect(jsonPath("$[0].roles[0]", is("vet")))
+                .andExpect(jsonPath("$[0].permissions[0]", is("POST:petprofiles")))
+                .andExpect(jsonPath("$[0].fullName", is("Alice Bane")))
+                .andExpect(jsonPath("$[0].address", is("New York City")))
+                .andExpect(jsonPath("$[0].created", is(notNullValue())))
+                .andExpect(jsonPath("$[0].updated", is(notNullValue())));
     }
 
     private static String requestBody() throws JsonProcessingException {

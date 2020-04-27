@@ -18,12 +18,12 @@ import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Document(collection = "users")
 public class User {
 
     @Id
     private String id;
-    @Indexed(unique = true)
+    @Indexed
     private String organization;
     @Indexed(unique = true)
     private String username;
