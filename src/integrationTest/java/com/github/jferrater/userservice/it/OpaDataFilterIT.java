@@ -2,7 +2,9 @@ package com.github.jferrater.userservice.it;
 
 import com.github.jferrater.userservice.model.UserDto;
 import org.junit.ClassRule;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
@@ -54,9 +56,9 @@ public class OpaDataFilterIT {
     }
 
     @Test
-    void petOwnerCanViewThePetProfileHeOwn() throws Exception {
+    void userCanViewTheirOwnInfo() throws Exception {
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.set("Authorization", "Basic Ym9iOnBhc3N3b3Jk"); //The user is bob, the pet owner of the pet with name browny
+        httpHeaders.set("Authorization", "Basic Ym9iOnBhc3N3b3Jk"); //The user is bob
         httpHeaders.set("X-ORG-HEADER", "SOMA"); //The name of the clinic is in the X-ORG-HEADER
         UserDto[] results = get(httpHeaders);
         assertThat(results.length, is(1));

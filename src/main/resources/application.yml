@@ -1,10 +1,23 @@
 
-spring:
-  data:
-    mongodb:
-      database: user_service
-      uri: "mongodb://mongo:mongo@localhost:27017/user_service"
 server:
   port: 8082
   servlet:
     context-path: /user-service/
+
+opa:
+  authorization:
+    url: "http://localhost:8181/v1/compile"
+
+  partial-request:
+    query: "data.userservice.authz.allow = true"
+    unknowns:
+      - "data.users"
+    user-attribute-to-http-header-map:
+      organization: X-ORG-HEADER
+    log-partial-request: true
+
+spring:
+  data:
+    mongodb:
+      database: user_service
+      uri: "mongodb://mongo:mongo@mongo-database:27017/user_service"

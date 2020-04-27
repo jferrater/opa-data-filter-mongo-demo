@@ -1,14 +1,16 @@
 package com.github.jferrater.userservice.repository;
 
+import com.github.jferrater.opadatafiltermongospringbootstarter.repository.OpaDataFilterMongoRepository;
 import com.github.jferrater.userservice.repository.document.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 /**
  * @author joffryferrater
  */
-public interface UserRepository extends MongoRepository<User, String> {
+@Repository
+public interface UserRepository extends OpaDataFilterMongoRepository<User, String> {
 
-    Optional<User> findByOrganizationAndUsername(String organization, String username);
+    List<User> findByOrganizationAndUsername(String organization, String username);
 }

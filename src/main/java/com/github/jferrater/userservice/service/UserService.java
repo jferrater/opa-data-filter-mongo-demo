@@ -1,11 +1,11 @@
 package com.github.jferrater.userservice.service;
 
-import com.github.jferrater.userservice.exceptions.UserNotFoundException;
 import com.github.jferrater.userservice.repository.UserRepository;
 import com.github.jferrater.userservice.repository.document.User;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -18,6 +18,19 @@ public class UserService {
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public void initTestData() {
+        TestData testData = new TestData(userRepository);
+        testData.createTestData();
+    }
+
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 
     public User createUser(User user) {
@@ -33,9 +46,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findUserByOrganizationAndUsername(String organization, String username) {
-        return userRepository.findByOrganizationAndUsername(organization, username)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with organization '%s' and username '%s' is not found!", organization, username)));
+    public List<User> findUserByOrganizationAndUsername(String organization, String username) {
+        return userRepository.findByOrganizationAndUsername(organization, username);
     }
 
     public void deleteUser(String uuid) {

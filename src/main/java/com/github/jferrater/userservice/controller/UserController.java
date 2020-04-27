@@ -18,6 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 /**
  * @author joffryferrater
  */
@@ -32,6 +37,23 @@ public class UserController {
     public UserController(UserService userService, ModelMapper modelMapper) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @GetMapping("/ping")
+    public ResponseEntity<String> ping() {
+        return new ResponseEntity<>("pong", HttpStatus.OK);
+    }
+
+    @PostMapping("/init")
+    public ResponseEntity<Void> createTestData() {
+        userService.initTestData();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/users")
+    public ResponseEntity<Void> deleteAll() {
+        userService.deleteAll();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(
@@ -87,12 +109,17 @@ public class UserController {
             }
     )
     @GetMapping("/users")
-    public ResponseEntity<UserDto> findUserByOrganizationAndUsername(
+    public ResponseEntity<List<UserDto>> findUserByOrganizationAndUsername(
             @Parameter(description = "The organization of the user.") @RequestParam("organization") @Nullable String organization,
-            @Parameter(description = "The username of the user") @RequestParam("username") String username) {
-        User user = userService.findUserByOrganizationAndUsername(organization, username);
-        UserDto userDto = convertToUserDto(user);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+            @Parameter(description = "The username of the user") @Nullable @RequestParam("username") String username) {
+        List<User> users;
+        if (organization == null && username == null) {
+            users = new ArrayList<>(userService.findAllUsers());
+        } else {
+            users = new ArrayList<>(userService.findUserByOrganizationAndUsername(organization, username));
+        }
+        List<UserDto> userDtos = users.stream().map(this::convertToUserDto).collect(toList());
+        return new ResponseEntity<>(userDtos, HttpStatus.OK);
     }
 
     @Operation(
