@@ -4,7 +4,8 @@ This is a sample microservice application that uses [opa-datafilter-mongo-spring
 Spring Data MongoDb to enforce authorization by filtering data using Open Policy Agent partial evaluation feature.
 
 ## Use case
-A user can view other users info in their own organization
+- A manager can view the users he/she managed.
+- A user can view his own info
 
 ## The OPA Policy
 ````text
@@ -46,10 +47,16 @@ allowed[user] {
 
 ### Testing
 ````shell script
-# fill mongodb with data
-curl -X POST "http://localhost:8082/user-service/init
+# populate the mongodb with test users
+curl -i http://localhost:8082/user-service/init
 
-# test with alice username and org SOMA
+# alex, the manager of SOMA, should be able to view his employees he managed
+curl -i --user alex:password -H "X-ORG-HEADER: SOMA" http://localhost:8082/user-service/users
+
+# alex, the manager of SOMA, should NOT be able to view the employees from other organization
+curl -i --user alex:password -H "X-ORG-HEADER: VETE" http://localhost:8082/user-service/users
+
+# alice should be able to see her info
 curl -i --user alice:password -H "X-ORG-HEADER: SOMA" http://localhost:8082/user-service/users
+
 ````
-- alice should be able to see other users in their own organization

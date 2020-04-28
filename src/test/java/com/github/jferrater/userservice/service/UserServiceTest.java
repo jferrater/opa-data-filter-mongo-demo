@@ -33,7 +33,7 @@ class UserServiceTest {
 
     @Test
     void shouldCreateUser() {
-        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), null);
         when(userRepository.insert(eq(alice))).thenReturn(alice);
@@ -56,7 +56,7 @@ class UserServiceTest {
 
     @Test
     void shouldUpdateUser() {
-        User updated = new User(USER_ID_LIST.get(0), "SOMA-Clinic-updated", "alice", "password",
+        User updated = new User(USER_ID_LIST.get(0), "SOMA-Clinic-updated", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane Update", "San Francisco City", "1234567", new Date(), new Date());
 
@@ -80,7 +80,7 @@ class UserServiceTest {
 
     @Test
     void shouldFindUserByOrganizationAndUsername() {
-        User updated = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User updated = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane Update", "San Francisco City", "1234567", new Date(), new Date());
 

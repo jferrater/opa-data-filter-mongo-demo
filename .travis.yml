@@ -34,7 +34,7 @@ jobs:
         - docker ps -a
       script:
         - ./gradlew clean build bootJar
-       # - ./gradlew integrationTest
+        - ./gradlew integrationTest
       after_script:
         - docker ps -a
 

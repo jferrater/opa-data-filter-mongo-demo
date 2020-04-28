@@ -25,6 +25,8 @@ public class User {
     private String id;
     @Indexed
     private String organization;
+    @Indexed
+    private String manager;
     @Indexed(unique = true)
     private String username;
     private String password;

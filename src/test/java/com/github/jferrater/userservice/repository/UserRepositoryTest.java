@@ -29,10 +29,10 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), new Date());
-        User dodong = new User(USER_ID_LIST.get(1), null, "dodong", "password",
+        User dodong = new User(USER_ID_LIST.get(1), null, null, "dodong", "password",
                 UserType.PET_OWNER, new String[]{"user"}, new String[]{"POST:petprofiles/{name}", "GET:petprofiles/{name}"},
                 "Dodong Francis", "Cebu City", "1234567", new Date(), new Date());
 

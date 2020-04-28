@@ -1,5 +1,6 @@
 package com.github.jferrater.userservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.jferrater.userservice.repository.document.UserType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -23,10 +24,13 @@ public class UserDto {
     @NotNull
     @Schema(description = "The organization or the clinic name")
     private String organization;
+    @Schema(description = "The manager of the user or veterinarian")
+    private String manager;
     @NotNull
     @Schema(description = "The username")
     private String username;
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Schema(description = "The password")
     private String password;
     @Schema(description = "The user type.")

@@ -18,10 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -47,7 +45,7 @@ class UserControllerTest {
 
     @Test
     void shouldCreateUser() throws Exception {
-        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), null);
         when(userRepository.insert(any(User.class))).thenReturn(alice);
@@ -60,7 +58,6 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id", is(USER_ID_LIST.get(0))))
                 .andExpect(jsonPath("$.organization", is("SOMA-Clinic")))
                 .andExpect(jsonPath("$.username", is("alice")))
-                .andExpect(jsonPath("$.password", is("password")))
                 .andExpect(jsonPath("$.userType", is("VETERINARIAN")))
                 .andExpect(jsonPath("$.roles[0]", is("vet")))
                 .andExpect(jsonPath("$.permissions[0]", is("POST:petprofiles")))
@@ -104,7 +101,7 @@ class UserControllerTest {
 
     @Test
     void shouldUpdateUser() throws Exception {
-        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), new Date());
         when(userRepository.save(any(User.class))).thenReturn(alice);
@@ -117,7 +114,6 @@ class UserControllerTest {
                 .andExpect(jsonPath("$.id", is(USER_ID_LIST.get(0))))
                 .andExpect(jsonPath("$.organization", is("SOMA-Clinic")))
                 .andExpect(jsonPath("$.username", is("alice")))
-                .andExpect(jsonPath("$.password", is("password")))
                 .andExpect(jsonPath("$.userType", is("VETERINARIAN")))
                 .andExpect(jsonPath("$.roles[0]", is("vet")))
                 .andExpect(jsonPath("$.permissions[0]", is("POST:petprofiles")))
@@ -138,7 +134,7 @@ class UserControllerTest {
 
     @Test
     void shouldFindUserByOrganizationAndUsername() throws Exception {
-        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User alice = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex","alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), new Date());
         when(userRepository.findByOrganizationAndUsername(anyString(), anyString())).thenReturn(List.of(alice));
@@ -149,7 +145,6 @@ class UserControllerTest {
                 .andExpect(jsonPath("$[0].id", is(USER_ID_LIST.get(0))))
                 .andExpect(jsonPath("$[0].organization", is("SOMA-Clinic")))
                 .andExpect(jsonPath("$[0].username", is("alice")))
-                .andExpect(jsonPath("$[0].password", is("password")))
                 .andExpect(jsonPath("$[0].userType", is("VETERINARIAN")))
                 .andExpect(jsonPath("$[0].roles[0]", is("vet")))
                 .andExpect(jsonPath("$[0].permissions[0]", is("POST:petprofiles")))
@@ -160,7 +155,7 @@ class UserControllerTest {
     }
 
     private static String requestBody() throws JsonProcessingException {
-        User user = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alice", "password",
+        User user = new User(USER_ID_LIST.get(0), "SOMA-Clinic", "alex", "alice", "password",
                 UserType.VETERINARIAN, new String[]{"vet"}, new String[]{"POST:petprofiles", "GET:petprofiles"},
                 "Alice Bane", "New York City", "1234567", new Date(), new Date());
         user.setOrganization("SOMA-Clinic");

@@ -39,17 +39,51 @@ public class UserController {
         this.modelMapper = modelMapper;
     }
 
+    @Operation(
+            summary = "Ping api",
+            description = "Returns pong if the service is ready",
+            tags = "user_service"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class)))
+            }
+    )
     @GetMapping("/ping")
     public ResponseEntity<String> ping() {
         return new ResponseEntity<>("pong", HttpStatus.OK);
     }
 
+
+    @Operation(
+            summary = "Fill mongo database with initial data for testing purposes",
+            description = "This is used for integration test",
+            tags = "user_service"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "OK"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class)))
+            }
+    )
     @PostMapping("/init")
     public ResponseEntity<Void> createTestData() {
         userService.initTestData();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Delete all users",
+            description = "Delete all users API",
+            tags = "user_service"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Ok"),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class)))
+            }
+    )
     @DeleteMapping("/users")
     public ResponseEntity<Void> deleteAll() {
         userService.deleteAll();
@@ -129,7 +163,7 @@ public class UserController {
     )
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Ok", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserDto.class))),
+                    @ApiResponse(responseCode = "200", description = "Ok"),
                     @ApiResponse(responseCode = "404", description = "Not Found", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class))),
                     @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = ApiError.class)))
             }
