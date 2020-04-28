@@ -68,7 +68,7 @@ public class OpaDataFilterMongoDbIT {
         httpHeaders.set("X-ORG-HEADER", "SOMA"); //The name of the clinic is in the X-ORG-HEADER
         UserDto[] results = get(httpHeaders);
 
-        assertThat(results.length, is(4));
+        assertThat(results.length, is(5));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class OpaDataFilterMongoDbIT {
         httpHeaders.set("X-ORG-HEADER", "VETE"); //The name of the clinic is in the X-ORG-HEADER
         UserDto[] results = get(httpHeaders);
 
-        assertThat(results.length, is(3));
+        assertThat(results.length, is(4));
     }
 
     @Test
