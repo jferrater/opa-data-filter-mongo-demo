@@ -1,7 +1,7 @@
 ## user-service
-[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-mongo-demo.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-mongo-demo)
-This is a sample microservice application that uses [opa-datafilter-mongo-spring-boot-starter](https://github.com/jferrater/opa-data-filter-spring-boot-starter)
-Spring Data MongoDb is used together with opa-datafilter-mongo-spring-boot-starter to enforce authorization by filtering data using Open Policy Agent partial evaluation feature.
+[![Build Status](https://travis-ci.com/jferrater/opa-data-filter-mongo-demo.svg?branch=master)](https://travis-ci.com/jferrater/opa-data-filter-mongo-demo)<br>
+This is a sample microservice application that uses [opa-datafilter-mongo-spring-boot-starter](https://github.com/jferrater/opa-data-filter-spring-boot-starter) with
+Spring Data MongoDb to enforce authorization by filtering data using Open Policy Agent partial evaluation feature.
 
 ## Use case
 A user can view other users info in their own organization
