@@ -10,10 +10,12 @@ allow {
 
 allowed[user] {
   user = data.users[_]
-  user.username = input.subject.username
+  user.username = input.subject.user
+  user.organization = input.subject.attributes.organization
 }
 
 allowed[user] {
   user = data.users[_]
+  user.manager = input.subject.user
   user.organization = input.subject.attributes.organization
 }
