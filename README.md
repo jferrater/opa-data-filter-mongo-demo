@@ -48,6 +48,7 @@ allowed[user] {
 ````shell script
 # fill mongodb with data
 curl -X POST "http://localhost:8082/user-service/init
+
 # test with alice username and org SOMA
 curl -i --user alice:password -H "X-ORG-HEADER: SOMA" http://localhost:8082/user-service/users
 ````
