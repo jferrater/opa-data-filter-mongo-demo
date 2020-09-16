@@ -34,6 +34,7 @@ allowed[user] {
 - java 11
 - docker
 - docker-compose
+- Open Policy Agent Server v0.22.0
 
 ### Quick Start
 1. ``git clone https://github.com/jferrater/opa-data-filter-mongo-demo.git``
@@ -48,7 +49,7 @@ allowed[user] {
 ### Testing
 ````shell script
 # populate the mongodb with test users
-curl -i http://localhost:8082/user-service/init
+curl -i http://localhost:8082/user-service/init -X POST
 
 # alex, the manager of SOMA, should be able to view his employees he managed
 curl -i --user alex:password -H "X-ORG-HEADER: SOMA" http://localhost:8082/user-service/users
